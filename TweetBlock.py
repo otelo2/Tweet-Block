@@ -9,7 +9,7 @@ class TweetBot():
     def login(self):
         self.driver.get('https://twitter.com')
 
-        sleep(10)
+        sleep(5)
 
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')
         login_btn.click()
@@ -24,4 +24,13 @@ class TweetBot():
         send_btn.click()
 
     def search(self):
-        a=1
+        #search_bar = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div[2]/input')
+        #search_bar.send_keys('@ennioft')
+        #sleep(1)
+        #user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-4"]/div[3]/div[2]')
+        #user_result.click()
+
+        #Ugly fix for now
+        self.driver.get('https://twitter.com/ennioft')
+
+    
