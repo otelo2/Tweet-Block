@@ -22,15 +22,20 @@ class TweetBot():
         pass_in.send_keys(password)
         send_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/main/div/div/form/div/div[3]/div/div')
         send_btn.click()
+        print("Logged in")
 
     def search(self):
-        #search_bar = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div[2]/input')
-        #search_bar.send_keys('@ennioft')
-        #sleep(1)
-        #user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-4"]/div[3]/div[2]')
-        #user_result.click()
+        search_bar = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div[2]/input')
+        search_bar.send_keys('@ennioft')
+        sleep(0.5)
+        try:
+            user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-5"]/div[3]/div[1]/div/div[1]/div[2]/div/div[1]/div/div/div[1]/span/span')
+            user_result.click()
+        except Exception:
+            #Ugly fix for now
+            self.driver.get('https://twitter.com/ennioft')
+            print("Used alternative search")
 
-        #Ugly fix for now
-        self.driver.get('https://twitter.com/ennioft')
-
-    
+    def getFollowing(self):
+        following_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div/div/div[2]/div/div/div[1]/div/div[5]/div[1]/a/span[2]/span')
+        following_btn.click()
