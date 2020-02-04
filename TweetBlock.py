@@ -6,6 +6,7 @@ class TweetBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.login()
+        self.block_demo()
 
     def login(self):
         self.driver.get('https://twitter.com')
@@ -71,13 +72,33 @@ class TweetBot():
         sleep(1)
         confirm_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/div/div/div/div/div[2]/div[2]/div[3]/div[2]')
         confirm_btn.click()
+        print("User blocked")
         sleep(1)
 
+    #User needs to be blocked for this to work
     def unblock(self):
         unblock_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/div[1]/div/div[1]/div/div[2]/div/div')
         unblock_btn.click()
         sleep(1)
         confirm_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/div/div/div/div/div[2]/div[2]/div[3]/div[2]')
         confirm_btn.click()
+        print("User unblocked")
         sleep(1)
 
+    #This just selects the first acc that pops up, for demo purposes
+    def select_victim(self):
+        victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
+        victim_btn.click()
+        sleep(1)
+
+    def go_home(self):
+        home_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/header/div/div/div/div/div[1]/h1/a')
+        home_btn.click()
+        sleep(1)
+
+    def block_demo(self):
+        self.search()
+        self.getFollowing()
+        self.select_victim()
+        self.block()
+        self.go_home()
