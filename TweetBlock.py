@@ -5,6 +5,7 @@ from time import sleep
 class TweetBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
+        self.login()
 
     def login(self):
         self.driver.get('https://twitter.com')
@@ -58,6 +59,25 @@ class TweetBot():
         sleep(1)
 
     def test(self):
-        self.login()
         self.search()
         self.getFollowing()
+
+    def block(self):
+        more_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/div[1]/div/div[1]/div/div[1]/div')
+        more_btn.click()
+        sleep(1)
+        block_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/div/div/div[2]/div[3]/div/div/div/div[3]')
+        block_btn.click()
+        sleep(1)
+        confirm_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/div/div/div/div/div[2]/div[2]/div[3]/div[2]')
+        confirm_btn.click()
+        sleep(1)
+
+    def unblock(self):
+        unblock_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/div[1]/div/div[1]/div/div[2]/div/div')
+        unblock_btn.click()
+        sleep(1)
+        confirm_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/div/div/div/div/div[2]/div[2]/div[3]/div[2]')
+        confirm_btn.click()
+        sleep(1)
+
