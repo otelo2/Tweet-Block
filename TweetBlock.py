@@ -1,7 +1,6 @@
 from selenium import webdriver
 from secrets import username,password
 from time import sleep
-
 class TweetBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -11,7 +10,7 @@ class TweetBot():
     def login(self):
         self.driver.get('https://twitter.com')
 
-        sleep(5)
+        sleep(4)
 
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')
         login_btn.click()
@@ -88,6 +87,8 @@ class TweetBot():
     #This just selects the first acc that pops up, for demo purposes
     def select_victim(self):
         victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
+        victim_text = victim_btn.text
+        print("Victim: ",victim_text)
         victim_btn.click()
         sleep(1)
 
@@ -96,9 +97,20 @@ class TweetBot():
         home_btn.click()
         sleep(1)
 
+    #Needs to be first in the following list
+    def get_user_text(self):
+        victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
+        victim_text = victim_btn.text
+        victim_data = victim_text.split("\n")
+        print("Name: ",victim_data[0])
+        print("Handle: ",victim_data[1])
+        print("Status: ", victim_data[2])
+        print("Bio: ", victim_data[3])
+        
     def block_demo(self):
         self.search()
         self.getFollowing()
-        self.select_victim()
-        self.block()
-        self.go_home()
+        self.get_user_text()
+        #self.select_victim()
+        #self.block()
+        #self.go_home()
