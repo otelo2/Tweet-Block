@@ -98,19 +98,27 @@ class TweetBot():
         sleep(1)
 
     #Needs to be first in the following list
-    def get_user_text(self):
-        victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
+    def get_user_text(self, victim_btn):
+        #victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
         victim_text = victim_btn.text
         victim_data = victim_text.split("\n")
         print("Name: ",victim_data[0])
         print("Handle: ",victim_data[1])
         print("Status: ", victim_data[2])
         print("Bio: ", victim_data[3])
-        
+        print("-------------")
+
+    def user_list_selection(self):
+        for num in range(1,10):
+            victim_btn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[{num}]')
+            print(f'{num}.-')
+            self.get_user_text(victim_btn)
+
     def block_demo(self):
         self.search()
         self.getFollowing()
-        self.get_user_text()
+        self.user_list_selection()
+        #self.get_user_text()
         #self.select_victim()
         #self.block()
         #self.go_home()
