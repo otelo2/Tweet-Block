@@ -119,6 +119,24 @@ class TweetBot():
             print('All good')
         return is_kpoper
 
+    def unblock_all(self):
+        #victim_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[1]')
+        for num in range(1,10):
+            victim_btn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[{num}]')
+            victim_text = victim_btn.text
+            victim_data = victim_text.split("\n")
+            print("Name: ",victim_data[0])
+            print("Handle: ",victim_data[1])
+            print("Status: ", victim_data[2])
+            print("Bio: ", victim_data[3])
+            if(victim_data[2]=="Bloqueado"):
+                #Kpop stan detected
+                victim_btn.click()
+                self.unblock()
+                self.driver.back()
+                print('Unblocked someone')
+            print("-------------")
+
     def block_demo(self):
         self.search()
         self.getFollowing()
