@@ -1,7 +1,11 @@
 from selenium import webdriver
 from secrets import username,password
 from time import sleep
+from kpopers import kpop_list
+#TODO: Replace sleep with a proper function
+#TODO: Untangle spaguetti
 
+#victim_data=[""]
 class TweetBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -11,7 +15,7 @@ class TweetBot():
     def login(self):
         self.driver.get('https://twitter.com')
 
-        sleep(4)
+        sleep(5)
 
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')
         login_btn.click()
@@ -89,13 +93,31 @@ class TweetBot():
         print("Handle: ",victim_data[1])
         print("Status: ", victim_data[2])
         print("Bio: ", victim_data[3])
+        if(victim_data[2]=="Seguir"):
+            if(self.check_kpop(victim_data)):
+                #Kpop stan detected
+                victim_btn.click()
+                self.block()
+                self.driver.back()
+                print('Blocked kpop stan!')
         print("-------------")
+        
 
     def user_list_selection(self):
         for num in range(1,10):
             victim_btn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/section/div/div/div/div[{num}]')
             print(f'{num}.-')
             self.get_user_text(victim_btn)
+
+    def check_kpop(self, victim_data):
+        #For now only checks name and bio cause im lazy
+        #is_kpoper = bool(set(victim_data).intersection(kpop_list))
+        is_kpoper = bool(((victim_data[0].lower() in kpop_list) or (victim_data[3].lower() in kpop_list)))
+        if(is_kpoper):
+            print('Kpoper detected')
+        else:
+            print('All good')
+        return is_kpoper
 
     def block_demo(self):
         self.search()

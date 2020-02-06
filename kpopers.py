@@ -4,4 +4,4 @@
 
 #Makes the txt file 'kpopers.txt' into a python list
 with open('kpopers.txt') as input_file:
-    kpop_list = [line.strip() for line in input_file]
+    kpop_list = [line.strip().lower() for line in input_file]
