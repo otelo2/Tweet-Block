@@ -1,6 +1,7 @@
 from selenium import webdriver
 from secrets import username,password
 from time import sleep
+
 class TweetBot():
     def __init__(self):
         self.driver = webdriver.Chrome()
@@ -15,7 +16,7 @@ class TweetBot():
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')
         login_btn.click()
 
-        sleep(1)
+        sleep(0.5)
 
         email_in = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div[1]/main/div/div/form/div/div[1]/label/div[2]/div/input')
         email_in.send_keys(username)
@@ -29,27 +30,9 @@ class TweetBot():
     def search(self):
         search_bar = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[1]/div/div/div[2]/input')
         search_bar.send_keys('@ennioft')
-        sleep(6)
-    #    try:
-    #        user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-2"]/div[3]/div[2]/div/span')
-    #        user_result.click()
-    #    except Exception:
-    #        #Ugly fix for now
-    #        self.driver.get('https://twitter.com/ennioft')
-    #        print("Used alternative search")
-        try:
-            print('Try 1')
-            user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-2"]/div[3]/div[2]/div/span')
-            user_result.click()
-        except Exception:
-            try:
-                print('Try 2')
-                user_result = self.driver.find_element_by_xpath('//*[@id="typeaheadDropdown-2"]/div[3]/div[1]/div/div[1]')
-                user_result.click()
-            except Exception:
-                print('Try 3')
-                user_result = self.driver.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[2]/div/div[3]/div[1]')
-                user_result.click()
+        sleep(4)
+        user_result = self.driver.find_element_by_xpath('/html/body/div/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[1]/div/div/div/form/div[2]/div/div[3]/div[1]')
+        user_result.click()
         print('Ended search')
         sleep(2)
 
