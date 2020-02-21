@@ -2,20 +2,29 @@ from selenium import webdriver
 from secrets import username,password
 from time import sleep
 from kpopers import kpop_list
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.common.by import By
 #TODO: Replace sleep with a proper function
 #TODO: Untangle spaguetti
+#wait = WebDriverWait(driver, 10)
+
 
 #victim_data=[""]
 class TweetBot():
+    
     def __init__(self):
         self.driver = webdriver.Chrome()
+        #global wait
         self.login()
-        self.block_demo()
+        #self.block_demo()
 
     def login(self):
         self.driver.get('https://twitter.com')
 
         sleep(5)
+
+        #login_btn = wait.until(ec.visibility_of_element_located((By.XPATH, '//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')))
 
         login_btn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/a[2]')
         login_btn.click()
@@ -145,3 +154,32 @@ class TweetBot():
         #self.select_victim()
         #self.block()
         #self.go_home()
+
+    ##Start of the autolike section of code
+
+    def autoLike(self):
+        self.selectTrending()
+        sleep(2)
+        for num in range(1,10):
+            try:
+                likeBtn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/section/div/div/div/div[{num}]/div/article/div/div[2]/div[2]/div[3]/div[3]/div/div')
+            except Exception:
+                for num1 in range(1,10):
+                    likeBtn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/section/div/div/div/div[{num}]/div/article/div/div[2]/div[2]/div[{num1}]/div[3]/div/div')
+            else:
+                for num1 in range(1,10):
+                    likeBtn = self.driver.find_element_by_xpath(f'//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[2]/div/div/section/div/div/div/div[{num}]/div/article/div/div[2]/div[2]/div[{num1}]/div[3]/div/div')
+            finally:
+                likeBtn.click()                               
+            
+        likeBtn = self.driver.find_element_by_class_name('css-18t94o4 css-1dbjc4n r-1777fci r-11cpok1 r-1ny4l3l r-bztko3 r-lrvibr')
+            
+    def selectTrending(self):
+        #select the most popular trend
+        mostTrendingBtn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[2]/div/div[2]/div/div/div/div[3]/div/div/section/div/div/div/div/div[2]/div/div/div[2]')
+        mostTrendingBtn.click()
+        #Switch to recent tab
+        sleep(.5)
+        recentBtn = self.driver.find_element_by_xpath('//*[@id="react-root"]/div/div/div/main/div/div/div/div[1]/div/div[1]/div[2]/nav/div[2]/div[2]/a')
+        recentBtn.click()
+        sleep(1)
